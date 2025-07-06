@@ -55,7 +55,7 @@ int main(void)
     // --- Load terrain ---
     Image hm = LoadImage("Great Lakes/Height-Map.png");
     if (!hm.data) { printf("Failed to load heightmap\n"); CloseWindow(); return 1; }
-    ImageResize(&hm, hm.width/3, hm.height/3);
+    ImageResize(&hm, hm.width/2, hm.height/2);
     Mesh terrainMesh = GenMeshHeightmap(hm, (Vector3){1000,350,1000});
     Model terrain     = LoadModelFromMesh(terrainMesh);
     UnloadImage(hm);
