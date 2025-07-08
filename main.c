@@ -63,7 +63,7 @@ int main(void)
     terrain.materials[0].maps[MAP_DIFFUSE].texture = terrainTex;
 
     // --- Load Tutorial Image ---
-    Texture2D tutorialImage = LoadTexture("Assets/tutorial_test.jpg");
+    Texture2D tutorialImage = LoadTexture("Assets/tutorial.png");
 
     // Optional saturation shader
     Shader sat = LoadShader(0, "Assets/saturation.fs");
@@ -295,7 +295,7 @@ int main(void)
               if (showTutorial)
               {
                 DrawRectangle(0, 0, W, H, Fade(BLACK, 0.2f));
-                float scale = 0.22f; 
+                float scale = 0.35f; 
 
                 Vector2 position = 
                 {
