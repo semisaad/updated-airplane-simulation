@@ -62,6 +62,9 @@ int main(void)
     Texture2D terrainTex = LoadTexture("Great Lakes/Diffuse-Map.png");
     terrain.materials[0].maps[MAP_DIFFUSE].texture = terrainTex;
 
+    // --- Load Tutorial Image ---
+    Texture2D tutorialImage = LoadTexture("Assets/tutorial_test.jpg");
+
     // Optional saturation shader
     Shader sat = LoadShader(0, "Assets/saturation.fs");
     float satVal = 3.0f;
@@ -94,6 +97,7 @@ int main(void)
     Plane allPlanes[MAX_PLANES] = { 0 };
     int planeCount = 0;
     int activePlaneIndex = 0;
+    bool showTutorial = false;
 
     bool firstPerson = false, freeCam = false, gameOver = false;
 
@@ -280,7 +284,33 @@ int main(void)
               EndMode3D();
 
               DrawFPS(960,10);
-              
+
+              //Tutorial Button
+              Rectangle tutorialBtn = {W- 60,30,40,40};
+              if(GuiButton(tutorialBtn,"?"))
+              {
+                   showTutorial = !showTutorial;
+              }
+
+              if (showTutorial)
+              {
+                DrawRectangle(0, 0, W, H, Fade(BLACK, 0.2f));
+                float scale = 0.22f; 
+
+                Vector2 position = 
+                {
+                    (W - tutorialImage.width * scale) / 2,
+                    (H - tutorialImage.height * scale) / 3.5
+                };
+                
+                DrawTextureEx(tutorialImage, position, 0.0f, scale, WHITE);
+              }
+
+              if (showTutorial && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+              {
+                    showTutorial = false;
+              }
+
               if (planeCount > 0)
               {
                   char coordText[128];
@@ -364,6 +394,7 @@ int main(void)
     CloseAudioDevice();
     UnloadMusicStream(engineSound);
     UnloadModel(terrain);     UnloadTexture(terrainTex); UnloadShader(sat);
+    UnloadTexture(tutorialImage);
     UnloadModel(planeModel);  UnloadTexture(planeTex);
     UnloadModel(runway);      UnloadTexture(runwayTex);
     CloseWindow();
